@@ -79,13 +79,22 @@ for i in range(200):
         t.forward(dr)
 
         # TODO: stop photons near origin
+
+        pos = photons[ii].pos()
+
+        r = sqrt(pos[0]*pos[0] + pos[1]*pos[1])
+        print(pos, r)
+        if r < 20:
+            continue
+
+        photons[ii].forward(distance_light_travels_per_step)
         pos = photons[ii].pos()
         r = sqrt(pos[0]*pos[0] + pos[1]*pos[1])
         newr = r * cosmic_scale_factor
         dr = newr - r
         print(ii, dr, distance_light_travels_per_step)
-        photons[ii].backward(dr)
-        photons[ii].forward(distance_light_travels_per_step)
+        #photons[ii].backward(dr)
+
 
     # accelerting universe
     cosmic_scale_factor += cosmic_scale_step
