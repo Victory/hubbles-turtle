@@ -8,10 +8,11 @@ from math import pi, sin, cos, sqrt
 dt = 1.0 # time step
 age = 3.0 # age of the universe
 c = 20.0 # speed of light
+h = 1/age # hubble constant
 # hubble length
-hubble_length = c*age
+hubble_length = c/h
 # hubble constant
-h = 1/c # hubble constant
+
 # cosmic scale factor
 cosmic_scale_factor = 1.1
 cosmic_scale_step = .01
@@ -27,7 +28,7 @@ hubbleturtle = Turtle(shape="turtle")
 hubbleturtle.penup()
 
 
-rand_scaling = 10
+rand_scaling = 2
 for ii in range(steps):
     angle = ii * step
     angles.append(angle)
@@ -65,7 +66,7 @@ hubbleturtle.setpos((0, -hubble_length))
 for i in range(200):
     #screen.tracer(1000)
 
-    distance_light_travels_per_step = c * dt # should there be a correct for change of dr in time dt?
+    distance_light_travels_per_step = c * dt # should there be a correct for change of dr in time dt? Does that cause the increase of vrec?
 
     print(distance_light_travels_per_step)
 
@@ -97,7 +98,10 @@ for i in range(200):
     hubbleturtle.pendown()
     hubbleturtle.circle(hubble_length)
     hubbleturtle.penup()
-    hubble_length += c * dt
+
+    vrec = h * hubble_length
+    print("vrec", vrec)
+    #hubble_length += c * dt
     
     hubbleturtle.setpos((0, -hubble_length))
 
