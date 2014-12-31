@@ -11,7 +11,7 @@ c = 20.0 # speed of light
 # hubble length
 hubble_length = c*age
 # hubble constant
-h0 = 1/c # hubble constant
+h = 1/c # hubble constant
 # cosmic scale factor
 cosmic_scale_factor = 1.1
 cosmic_scale_step = .01
@@ -27,14 +27,12 @@ hubbleturtle = Turtle(shape="turtle")
 hubbleturtle.penup()
 
 
+rand_scaling = 10
 for ii in range(steps):
-
-
-
     angle = ii * step
     angles.append(angle)
-    x = cos(angle) * random() * 5 * hubble_length
-    y = sin(angle) * random() * 5 * hubble_length
+    x = cos(angle) * random() * rand_scaling * hubble_length
+    y = sin(angle) * random() * rand_scaling * hubble_length
 
     stars.append(Turtle(shape="triangle"))
 
@@ -67,43 +65,39 @@ hubbleturtle.setpos((0, -hubble_length))
 for i in range(200):
     #screen.tracer(1000)
 
-    distance_light_travels_per_step = c * dt * cosmic_scale_factor
+    distance_light_travels_per_step = c * dt # should there be a correct for change of dr in time dt?
 
-    print(cosmic_scale_factor)
+    print(distance_light_travels_per_step)
 
     for ii, t in enumerate(stars):
+        # move stars
         pos = t.pos()
         r = sqrt(pos[0]*pos[0] + pos[1]*pos[1])
-        newr = r * cosmic_scale_factor
-        dr = newr - r
+        dr = h * r * dt
+        print(dr)
         t.forward(dr)
 
-        # TODO: stop photons near origin
-
+        # move planet
         pos = photons[ii].pos()
-
         r = sqrt(pos[0]*pos[0] + pos[1]*pos[1])
-        print(pos, r)
-        if r < 20:
+        if r <= c:
+            photons[ii].home()
             continue
 
-        photons[ii].forward(distance_light_travels_per_step)
-        pos = photons[ii].pos()
         r = sqrt(pos[0]*pos[0] + pos[1]*pos[1])
-        newr = r * cosmic_scale_factor
-        dr = newr - r
-        print(ii, dr, distance_light_travels_per_step)
-        #photons[ii].backward(dr)
+        dr = h * r * dt
+        print(distance_light_travels_per_step, dr, distance_light_travels_per_step - dr)
+        photons[ii].forward(distance_light_travels_per_step - dr)
 
 
-    # accelerting universe
+    # "velocity" of the hubble spher's recession
     cosmic_scale_factor += cosmic_scale_step
 
 
     hubbleturtle.pendown()
     hubbleturtle.circle(hubble_length)
     hubbleturtle.penup()
-    hubble_length += distance_light_travels_per_step
+    hubble_length += c * dt
     
     hubbleturtle.setpos((0, -hubble_length))
 
