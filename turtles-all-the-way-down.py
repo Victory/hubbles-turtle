@@ -99,10 +99,11 @@ for i in range(200):
     hubbleturtle.circle(hubble_length)
     hubbleturtle.penup()
 
+    hubble_length = c/h
     vrec = h * hubble_length
     print("vrec", vrec)
     hubbleturtle.setpos((0, -hubble_length))
-    h += .1
+    h -= .05
 
     screen.update()
     sleep(.01)
