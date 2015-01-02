@@ -103,7 +103,7 @@ for i in range(200):
     vrec = h * hubble_length
     print("vrec", vrec)
     hubbleturtle.setpos((0, -hubble_length))
-    h -= .05
+    h *= .90
 
     screen.update()
     sleep(.01)
