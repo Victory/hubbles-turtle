@@ -5,7 +5,7 @@ from random import random
 from time import sleep
 from math import pi, sin, cos, sqrt
 
-dt = 1.0 # time step
+dt = .80 # time step
 age = 3.0 # age of the universe
 c = 20.0 # speed of light
 h = 1/age # hubble constant
@@ -103,7 +103,9 @@ for i in range(200):
     vrec = h * hubble_length
     print("vrec", vrec)
     hubbleturtle.setpos((0, -hubble_length))
-    h *= .90
+
+    age += dt
+    h = 1/age
 
     screen.update()
     sleep(.01)
